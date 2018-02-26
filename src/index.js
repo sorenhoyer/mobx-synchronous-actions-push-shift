@@ -14,15 +14,20 @@ class AppState {
     this.data = { key1: [], key2: [], key3: [], key4: [], key5: [] };
 
     setInterval(() => {
-      let timestamp = Math.round(new Date().getTime() / 1000);
-      for (let key of this.keys) {
-        if (self.data[key].length < self.maxCount) {
-          self.pushToArr(timestamp, key);
-        } else {
-          self.shiftFromArr(key);
-        }
-      }
+      self.doInterval();
     }, 1000);
+  }
+
+  @action
+  doInterval() {
+    let timestamp = Math.round(new Date().getTime() / 1000);
+    for (let key of this.keys) {
+      if (this.data[key].length < this.maxCount) {
+        this.pushToArr(timestamp, key);
+      } else {
+        this.shiftFromArr(key);
+      }
+    }
   }
 
   @action
@@ -30,7 +35,7 @@ class AppState {
     let self = this;
     setTimeout(function() {
       self.data[key].push({ x: timestamp, y: Math.floor(Math.random() * 100) });
-    }, (Math.floor(Math.random() * 6) + 1) * 100);
+    }, (Math.floor(Math.random() * 6) + 1) * 1000);
   }
 
   @action
