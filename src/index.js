@@ -22,11 +22,10 @@ class AppState {
   doInterval() {
     let timestamp = Math.round(new Date().getTime() / 1000);
     for (let key of this.keys) {
-      if (this.data[key].length < this.maxCount) {
-        this.pushToArr(timestamp, key);
-      } else {
+      if (this.data[key].length >= this.maxCount) {
         this.shiftFromArr(key);
       }
+      this.pushToArr(timestamp, key);
     }
   }
 
